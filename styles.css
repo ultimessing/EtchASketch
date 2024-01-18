@@ -1,3 +1,36 @@
 html {
     font-family: 'Roboto', sans-serif;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+    /* background-color: #1e1c36; */
+    background-color: #1d1c28;
+    color: #f8f7f9;
+}
+
+.navBar {
+    display:flex;
+    justify-content: center;
+    padding-top: 0.3em;
+    font-size: 2em;
+}
+
+.confAndSketchCont {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+.gridCont {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1;
+    width: 300px;
+    height: 300px;
+}

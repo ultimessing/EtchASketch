@@ -31,22 +31,56 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    flex: 1;
     width: 300px;
     height: 300px;
 }
 
 .confCont {
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     font-size: 1.2em;
+}
+
+#size {
+    display:flex;
+    flex-direction: column;
+}
+
+#color {
+    display: flex;
+    flex-direction: row;
+    margin-left:1em;
+    align-items: center;
+}
+
+#colorPicker {
+    margin-left: 0.5em;
+    border: none;
+}
+.mainCont {
+    display: flex;
+    flex-direction: column;
+}
+
+#footer {
+    background-color: #211c2c;
+    margin-top:20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height:3em;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .createButton {
     margin-top: 1em;
     min-width: 200px;
     min-height: 80px;
+    max-width: 400px;
     background: none;
     appearance: none;
     background-color: transparent;
@@ -85,6 +119,8 @@ body {
 }
 
 .unselectable {
+    box-sizing: border-box;
+    border: 1px solid #444343;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
     -khtml-user-select: none; /* Konqueror HTML */

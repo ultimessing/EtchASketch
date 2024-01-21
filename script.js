@@ -1,4 +1,18 @@
+// object declarations
+
 let documentFragment = document.createDocumentFragment();
+let createButton = document.querySelector('.createButton');
+let containerDiv = document.querySelector('.gridCont');
+let sizeSlider = document.querySelector("#dimension");
+sizeSlider.value = 16;
+let sliderLabel = document.querySelector('.label');
+sliderLabel.textContent = `Size: ${sizeSlider.value} x ${sizeSlider.value}`;
+let dimSize = containerDiv.offsetWidth / sizeSlider.value;
+let gridAmount = sizeSlider.value * sizeSlider.value;
+let colorPicker = document.querySelector('#colorPicker');
+colorPicker.value = '#666666';
+
+// event functions
 
 function divMouseOver() {
     this.style.backgroundColor = '#363648';
@@ -8,13 +22,11 @@ function divMouseOut() {
     this.style.backgroundColor = '#121220';
 }
 
-function createGridDiv(divSize) {
+function createGridDiv(dimSize) {
     let gridDiv = document.createElement('div');
     gridDiv.style.backgroundColor = '#121220'
-    gridDiv.style.minWidth = `${divSize}px`;
-    gridDiv.style.minHeight = `${divSize}px`;
-    // gridDiv.style.minWidth = '' + divSize + ' px';
-    gridDiv.style.minHeight = '' + divSize + ' px';
+    gridDiv.style.minWidth = `${dimSize}px`;
+    gridDiv.style.minHeight = `${dimSize}px`;
     gridDiv.classList.add("unselectable");
     gridDiv.addEventListener('mouseover', divMouseOver);
     gridDiv.addEventListener('mouseout', divMouseOut);
@@ -23,36 +35,32 @@ function createGridDiv(divSize) {
         if (event.buttons == 1) {
             gridDiv.removeEventListener('mouseover', divMouseOver);
             gridDiv.removeEventListener('mouseout', divMouseOut);
-            gridDiv.style.backgroundColor = '#666666';
+            gridDiv.style.backgroundColor = colorPicker.value;
         }
-
     })
     return gridDiv;
 }
 
-let dimValue = 16;
-let dimSize = 300/16;
-let constAmount = dimValue * dimValue;
-let sizeSlider = document.querySelector("#dimension");
-let sliderLabel = document.querySelector('.label');
-sliderLabel.textContent = `Size: ${dimValue} x ${dimValue}`;
+// slider event
+
 sizeSlider.addEventListener('input', (event) => {
-    dimValue = event.target.value;
-    constAmount = dimValue * dimValue;
-    divSize = 300 / Math.sqrt(constAmount);
-    sliderLabel.textContent = `Size: ${dimValue} x ${dimValue}`;
+    sizeSlider.value = event.target.value;
+    gridAmount = sizeSlider.value * sizeSlider.value;
+    dimSize = containerDiv.offsetWidth / sizeSlider.value;
+    sliderLabel.textContent = `Size: ${sizeSlider.value} x ${sizeSlider.value}`;
 })
 
+// create grid event
 
-let createButton = document.querySelector('.createButton');
 createButton.addEventListener('click', () => {
-    let containerDiv = document.querySelector('.gridCont');
     while (containerDiv.firstChild) {
         containerDiv.removeChild(containerDiv.firstChild);
     }
-    for (i = 0; i < constAmount; i++) {
+    for (i = 0; i < gridAmount; i++) {
         documentFragment.appendChild(createGridDiv(dimSize));
     }
-
     containerDiv.appendChild(documentFragment);
 })
+
+let startingEvent = new Event('click');
+createButton.dispatchEvent(startingEvent);

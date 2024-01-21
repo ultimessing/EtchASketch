@@ -22,11 +22,18 @@
 
             </div>
             <div class="confCont">
-                <input type="range" id="dimension" name="dimension" min="16" max="64" />
-                <label for="dimension" class="label">Size: </label>
-                <button class="createButton">Create a new field</button>
+                <div id="size">
+                    <input type="range" id="dimension" name="dimension" min="16" max="64" />
+                    <label for="dimension" class="label">Size: </label>
+                </div>
+                <div id="color">
+                    <label for="color" class="label">Color:</label>
+                    <input type="color" id="colorPicker" name="color">
+                </div>
             </div>
+                <button class="createButton">Create a new field</button>
         </div>
+        <footer id="footer">Copyright © Ulti 2024</footer>
     </div>
 
 

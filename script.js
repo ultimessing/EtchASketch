@@ -1,23 +1,58 @@
 let documentFragment = document.createDocumentFragment();
-let constAmount = 256;
-let constSize = 300/(256/16);
-console.log(constSize);
 
-function createGridDiv() {
+function divMouseOver() {
+    this.style.backgroundColor = '#363648';
+}
+
+function divMouseOut() {
+    this.style.backgroundColor = '#121220';
+}
+
+function createGridDiv(divSize) {
     let gridDiv = document.createElement('div');
     gridDiv.style.backgroundColor = '#121220'
-    gridDiv.style.minWidth = `${constSize}px`;
-    gridDiv.style.minHeight = `${constSize}px`;
-    // gridDiv.style.minWidth = '' + constSize + ' px';
-    gridDiv.style.minHeight = '' + constSize + ' px';
-    gridDiv.addEventListener('mouseover', () => gridDiv.style.backgroundColor = '#363648');
-    gridDiv.addEventListener('mouseout', () => gridDiv.style.backgroundColor = '#121220');
+    gridDiv.style.minWidth = `${divSize}px`;
+    gridDiv.style.minHeight = `${divSize}px`;
+    // gridDiv.style.minWidth = '' + divSize + ' px';
+    gridDiv.style.minHeight = '' + divSize + ' px';
+    gridDiv.classList.add("unselectable");
+    gridDiv.addEventListener('mouseover', divMouseOver);
+    gridDiv.addEventListener('mouseout', divMouseOut);
+    gridDiv.draggable = false;
+    gridDiv.addEventListener('mousemove', (event) => {
+        if (event.buttons == 1) {
+            gridDiv.removeEventListener('mouseover', divMouseOver);
+            gridDiv.removeEventListener('mouseout', divMouseOut);
+            gridDiv.style.backgroundColor = '#666666';
+        }
+
+    })
     return gridDiv;
 }
 
-for (i = 0; i < constAmount; i++) {
-    documentFragment.appendChild(createGridDiv());
-}
+let dimValue = 16;
+let dimSize = 300/16;
+let constAmount = dimValue * dimValue;
+let sizeSlider = document.querySelector("#dimension");
+let sliderLabel = document.querySelector('.label');
+sliderLabel.textContent = `Size: ${dimValue} x ${dimValue}`;
+sizeSlider.addEventListener('input', (event) => {
+    dimValue = event.target.value;
+    constAmount = dimValue * dimValue;
+    divSize = 300 / Math.sqrt(constAmount);
+    sliderLabel.textContent = `Size: ${dimValue} x ${dimValue}`;
+})
 
-let containerDiv = document.querySelector('.gridCont');
-containerDiv.appendChild(documentFragment);
+
+let createButton = document.querySelector('.createButton');
+createButton.addEventListener('click', () => {
+    let containerDiv = document.querySelector('.gridCont');
+    while (containerDiv.firstChild) {
+        containerDiv.removeChild(containerDiv.firstChild);
+    }
+    for (i = 0; i < constAmount; i++) {
+        documentFragment.appendChild(createGridDiv(dimSize));
+    }
+
+    containerDiv.appendChild(documentFragment);
+})
